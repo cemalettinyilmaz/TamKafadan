@@ -1,0 +1,85 @@
+﻿@using TamKafadan.ViewModels
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/jquery.multiselect.css">
+<link rel="stylesheet" href="~/fonts/icomoon/style.css">
+@{
+    ViewData["Title"] = "Ayarlar";
+}
+@if (TempData["mesaj"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["mesaj"]
+    </div>
+}
+
+@model AyarlarViewModel
+<div class="container text-center">
+
+    <div class="content">
+        <form method="post" asp-action="Ayarlar"  enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+             <img width="250" height="250" src="~/images/@Model.ResimYolu" alt="@Model.KullaniciAdi">
+            <div class="form-group form-check mt-2"><input type="checkbox" class="form-check-input" id="gorselEkle"><label class="form-check-label" for="gorselEkle" name="gorselEkle">Profil fotoğrafınızı değiştirmek ister misiniz?</label></div>
+        <div id="gorselAlan" class="d-none  justify-content-center">
+            <input asp-for="ResimYolu" hidden />
+            <input type="file" class="form-control-file justify-content-center" id="resim" asp-for="Resim">
+        </div>
+        
+            <input asp-for=YazarId hidden/>
+            <label class="mt-2" asp-for=Email></label>
+               <br />
+            <input asp-for="Email"/>
+            <br />
+            <label class="mt-2" asp-for=KullaniciAdi></label>
+               <br />
+            <input asp-for="KullaniciAdi"/>
+            <br />
+            <label class="mt-2" asp-for=YazarAd></label>
+               <br />
+            <input asp-for="YazarAd"/>
+            <br />
+            <label class="mt-2" asp-for=Biografi></label>
+               <br />
+            <textarea asp-for="Biografi" rows=3 cols=25></textarea>
+            <br />
+
+            <h5 class="mt-2">İlgilendiğin Konular</h5>
+            <div class="container text-center mt-2">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+
+
+
+                        <select asp-for=SecilenKonular asp-items=@Model.Konular multiple="multiple" class="3col active form-control">
+                        </select>
+
+
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-secondary mt-2">Ayarları Kaydet</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/jquery.multiselect.js"></script>
+<script src="~/js/main.js"></script>
+<script>
+    const input=document.querySelector("#gorselEkle");
+    const gorselAlan=document.querySelector("#gorselAlan");
+    input.addEventListener("change",function(e)
+    {
+        gorselAlan.classList.toggle("d-none");
+    })
+
+</script>
+}
