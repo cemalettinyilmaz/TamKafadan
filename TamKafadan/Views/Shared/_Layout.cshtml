@@ -15,12 +15,20 @@
     <title>@ViewData["Title"] - TamKafadan</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/jquery.multiselect.css">
+<link rel="stylesheet" href="~/fonts/icomoon/style.css">
        
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TamKafadan</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,29 +43,63 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                     
                     </ul>
+                       
                     <ul class="navbar-nav ml-auto">
+                       
                         @if (string.IsNullOrEmpty(kadi))
                         {
+                              <li class="nav-item">
+                                <a class="nav-link text-dark" data-toggle="modal" data-target="#exampleModalCenter">Makale Yaz</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Giris" asp-action="Index">Giriş Yap</a>
+                                <a class="nav-link text-dark" data-toggle="modal" data-target="#exampleModalCenter">Giriş Yap</a>
                             </li>
                         }
                         else
                         {
+                              <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Makale" asp-action="MakaleYaz">Makale Yaz</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Yazar" asp-action="Profil">Profil</a>
+                                <a class="nav-link text-dark"  asp-action="Profil" asp-controller="Yazar" asp-route-kullaniciAdi="@kadi" >Profil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Yazar" asp-action="Cikis">Çıkış Yap</a>
                             </li>
                         }
-
+                       
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container text-center">
+    Tam Kafadan'a hoşgeldiniz. Giriş yapmak için lütfen e-posta adresinizi girerek Gönder tuşuna basınız. E-postanıza gelen link ile giriş yapabilirsiniz. 
+    <form method="post" class="mt-2" asp-controller="Giris" asp-action="GirisEmail">
+        <input name="email" type="email"/>
+        <button class="btn btn-secondary">Gönder</button>
+    </form>    
+</div>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

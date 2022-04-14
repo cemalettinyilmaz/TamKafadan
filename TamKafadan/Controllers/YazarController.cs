@@ -40,6 +40,29 @@ namespace TamKafadan.Controllers
             }
             return View();
         }
+
+        [Route("/{kullaniciAdi}")]
+        public IActionResult Profil(string kullaniciAdi)
+        {
+            if(kullaniciAdi==null)
+            {
+                return NotFound();
+            }
+            Yazar yazar = _db.Yazarlar.Include(x=>x.Makaleleri).Include(x=>x.Konulari).FirstOrDefault(x => x.KullaniciAdi == kullaniciAdi);
+            if(yazar==null)
+            {
+                return NotFound();
+            }
+
+            return View(yazar);
+        }
+
+
+
+
+
+
+
         [Login]
         public IActionResult Ayarlar()
         {
@@ -80,7 +103,7 @@ namespace TamKafadan.Controllers
             }
             if(ModelState.IsValid)
             {
-
+                //todo
             }
             return View(vm);
         }
@@ -88,8 +111,7 @@ namespace TamKafadan.Controllers
 
         public IActionResult Cikis()
         {
-            HttpContext.Session.Remove("kullaniciAdi");
-            //Clear kullanırsak Sessionın cookkesini temizlemeliyiz.
+            HttpContext.Session.Remove("kullaniciAdi");         
             TempData["mesaj"] = "Başarıyla Çıkış Yaptınız.";
             return RedirectToAction("Index", "Home");
         }

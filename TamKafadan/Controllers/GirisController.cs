@@ -15,13 +15,13 @@ namespace TamKafadan.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult GirisEmail()
         {
 
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string email)
+        public IActionResult GirisEmail(string email)
         {
             Yazar girisYapan = _db.Yazarlar.FirstOrDefault(x => x.Email == email);
             if(girisYapan==null)
@@ -68,11 +68,11 @@ namespace TamKafadan.Controllers
             {
                 smtp.Send(mail);
                 mail.Dispose();
-                ViewBag.Mesaj = "Mail gönderildi,lütfen gelen kutusunu kontrol ediniz.";
+                TempData["mesaj"] = "Mail gönderildi,lütfen gelen kutusunu kontrol ediniz.";
             }
             catch (Exception ex)
             {
-                ViewBag.Mesaj = "Hata oluştu: " + ex.ToString();
+                TempData["mesaj"] = "Hata oluştu: " + ex.ToString();
                 throw;
             }            
 

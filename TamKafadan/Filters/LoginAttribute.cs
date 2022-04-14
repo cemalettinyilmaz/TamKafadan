@@ -14,7 +14,7 @@ namespace TamKafadan.Filters
                 email = context.HttpContext.Request.Cookies["kullaniciAdi"];
                 if (string.IsNullOrEmpty(email))
                 {
-                    context.Result = new RedirectToActionResult("Index", "Giris", "");
+                    context.Result = new RedirectToActionResult("GirisEmail", "Giris", "");
 
                 }
             }
