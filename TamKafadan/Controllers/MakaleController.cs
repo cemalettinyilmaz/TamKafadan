@@ -145,6 +145,7 @@ namespace TamKafadan.Controllers
             gm.Icerik = vm.Icerik;
             gm.YazarId = girisYapan.YazarId;
             gm.MakaleId = vm.MakaleId;
+            gm.OnayliMi = false;
             gm.OlusuturulmaZamani = DateTime.Now;
             gm.Konulari.Clear();
             foreach (var konuId in vm.SecilenKonular)

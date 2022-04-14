@@ -1,0 +1,111 @@
+﻿@model IEnumerable<TamKafadan.Models.Makale>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Makale Sayfası</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class=row>
+    <div class=col-6>
+        <h4>Onay Bekleyenler</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </th>
+       
+            <th>
+                @Html.DisplayNameFor(model => model.OlusuturulmaZamani)
+            </th>
+         
+            <th>
+                @Html.DisplayNameFor(model => model.OnayliMi)
+            </th>
+         
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    @if(item.OnayliMi==false)
+            {
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslik)
+            </td>
+        
+            <td>
+                @Html.DisplayFor(modelItem => item.OlusuturulmaZamani)
+            </td>
+         
+            <td>
+                @Html.DisplayFor(modelItem => item.OnayliMi)
+            </td>
+         
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MakaleId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MakaleId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MakaleId">Delete</a>
+            </td>                
+        </tr>
+            }
+}
+    </tbody>
+</table>
+
+    </div>
+    <div class=col-6>
+        <h4>Onaylılar</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </th>
+      
+            <th>
+                @Html.DisplayNameFor(model => model.OlusuturulmaZamani)
+            </th>
+         
+            <th>
+                @Html.DisplayNameFor(model => model.OnayliMi)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    @if(item.OnayliMi==true)
+            {
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslik)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.OlusuturulmaZamani)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.OnayliMi)
+            </td>
+       
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MakaleId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MakaleId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MakaleId">Delete</a>
+            </td>                
+        </tr>
+            }
+}
+    </tbody>
+</table>
+
+    </div>
+</div>

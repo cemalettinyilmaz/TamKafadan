@@ -1,35 +1,68 @@
 ﻿@{
     ViewData["Title"] = "Tam Kafadan";
 }
-@if(TempData["mesaj"]!=null)
-	{
-		<div class="alert alert-success" role="alert">
-		@TempData["mesaj"]
-</div>
-	}
+@if (TempData["mesaj"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["mesaj"]
+    </div>
+}
 
 @{
-    var kadi = Context.Session.GetString("kullaniciAdi");  
+    var kadi = Context.Session.GetString("kullaniciAdi");
 }
-	<style>
-		p{
-			color:black;
-		}
-	</style>
+<style>
+    p {
+        color: black;
+    }
+</style>
 
 
-	@if(kadi==null)
-	{
-		<div class="text-center">
-   
-		   <h5>
-			Kafandakileri Getir Tam Kafana Göre Olanları Götür
-		   </h5>
-		   <p>Makale Yaz seçeneğine tıklayarak hemen kafandakileri en kafa kullanıcılar ile paylaşabilirsin. </p>
-		   <p>Bunu yapmadan önce tek istediğimiz şey email adresin ile giriş yapman haydi başlayalım.</p>
-		   <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Daha Fazla Bilgi İçin Tıkla</a></p>
-		</div>
+@if (kadi == null)
+{
+    <div class=row>
+        <div class="col-md-2">
+            <img class=img-fluid src="~/images/kalem-kafa.png">
+        </div>
+        <div class="text-center col-md-8">
 
-	}
+            <h5>
+                Kafandakileri Getir Tam Kafana Göre Olanları Götür
+            </h5>
+            <p>Makale Yaz seçeneğine tıklayarak hemen kafandakileri en kafa kullanıcılar ile paylaşabilirsin. </p>
+            <p>Bunu yapmadan önce tek istediğimiz şey email adresin ile giriş yapman haydi başlayalım.</p>
+            <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Daha Fazla Bilgi İçin Tıkla</a></p>
+        </div>
+        <div class="col-md-2">
+            <img class=img-fluid src="~/images/kalem-kafa.png">
+        </div>
+    </div>
+
+}
+
+else
+
+{    
+        <div class=row>
+        <div class="col-md-2">
+            <img class=img-fluid src="~/images/kalem-kafa.png">
+        </div>
+        <div class="text-center col-md-8">
+
+            <h5>
+               Kafandakileri Getir Tam Kafana Göre Olanları Götür
+            </h5>
+            <p>Hoşgeldin @kadi</p>
+           
+        </div>
+        <div class="col-md-2">
+            <img class=img-fluid src="~/images/kalem-kafa.png">
+        </div>
+    </div>
+
+
+
+
+}
 
 

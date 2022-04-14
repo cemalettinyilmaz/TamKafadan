@@ -18,16 +18,7 @@ namespace TamKafadan.Filters
 
                 }
             }
-            var admin = context.HttpContext.Session.GetString("admin");
-            if (string.IsNullOrEmpty(admin))
-            {
-                admin = context.HttpContext.Request.Cookies["admin"];
-                if (string.IsNullOrEmpty(admin))
-                {
-                    context.Result = new RedirectToActionResult("Index", "Dashboard", "Admin");
-
-                }
-            }
+           
         }
     }
 }

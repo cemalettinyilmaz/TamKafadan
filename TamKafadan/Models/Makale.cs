@@ -22,6 +22,7 @@ namespace TamKafadan.Models
         public DateTime OlusuturulmaZamani { get; set; }= DateTime.Now;
         [Display(Name ="Görüntüleme Sayısı")]
         public int GoruntulenmeSayisi { get; set; } = 0;
+        public bool OnayliMi { get; set; } = false;
         public int YazarId { get; set; }
         public Yazar Yazar { get; set; }
         public ICollection<Konu> Konulari { get; set; }

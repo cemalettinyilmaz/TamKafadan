@@ -77,63 +77,130 @@
                             <ul class="timeline">
                                 @foreach (var makale in @Model.Makaleleri.OrderByDescending(x => x.OlusuturulmaZamani))
                                 {
-                                    <li>
-                                        <!-- begin timeline-time -->
+                                    if (kadi != Model.KullaniciAdi && makale.OnayliMi == true)
+                                    {
+                                        <li>
+                                            <!-- begin timeline-time -->
                                     <div class="timeline-time">
-                                            <span class="date">
-                                                @{
-                                                    var culture = new System.Globalization.CultureInfo("tr-TR");
-                                                    var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);
-                                                }
-                                                @day
+                                                <span class="date">
+                                                    @{
+                                                        var culture = new System.Globalization.CultureInfo("tr-TR");
+                                                        var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);
+                                                    }
+                                                    @day
 
-                                            </span>
-                                            <span class="time">@makale.OlusuturulmaZamani.ToShortDateString()</span>
-                                        </div>
-                                        <!-- end timeline-time -->
-                                        <!-- begin timeline-icon -->
-                                    <div class="timeline-icon">
-                                            <a href="javascript:;">&nbsp;</a>
-                                        </div>
-                                        <!-- end timeline-icon -->
-                                        <!-- begin timeline-body -->
-                                    <div class="timeline-body">
-                                            <div class="timeline-header">
-                                                <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
-                                                <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik</a> <small></small></span>
-                                                <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
+                                                </span>
+                                                <span class="time">@makale.OlusuturulmaZamani.ToShortDateString()</span>
                                             </div>
-                                            <div class="timeline-content">
-                                                <a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> <h4>@makale.Baslik</h4></a>
-                                                <p class=text-secondary>
-                                                    @if (makale.Icerik.Length > 300)
+                                            <!-- end timeline-time -->
+                                            <!-- begin timeline-icon -->
+                                    <div class="timeline-icon">
+                                                <a href="javascript:;">&nbsp;</a>
+                                            </div>
+                                            <!-- end timeline-icon -->
+                                            <!-- begin timeline-body -->
+                                    <div class="timeline-body">
+                                                <div class="timeline-header">
+                                                    <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
+                                                    <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik</a> <small></small></span>
+                                                    <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> <h4>@makale.Baslik</h4></a>
+                                                    <p class=text-secondary>
+                                                        @if (makale.Icerik.Length > 300)
+                                                        {
+                                                            @makale.Icerik.Substring(0, 300)
+                                                            ;
+                                                            <span>...</span>
+                                                            <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Devamını oku</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            @makale.Icerik
+                                                            ;
+
+                                                        }
+                                                    </p>
+                                                    <div class="timeline-likes">
+                                                        <div class="stats-right">
+                                                            <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-footer d-flex justify-content-between mt-2">
+                                                    @if (@kadi == @Model.KullaniciAdi)
                                                     {
-                                                        @makale.Icerik.Substring(0, 300)
-                                                        ;
-                                                        <span>...</span>
-                                                        <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Devamını oku</a>
+                                                        <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>
+                                                        <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
                                                     }
-                                                    else
-                                                    {
-                                                        @makale.Icerik;
-                                                        
-                                                    }
-                                                </p>
-                                            <div class="timeline-likes">
-                                                <div class="stats-right">
-                                                    <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
                                                 </div>
                                             </div>
+                                        </li>
+                                    }
+                                    else if(kadi!=null)
+                                    {
+                                        <li>
+                                            <!-- begin timeline-time -->
+                                    <div class="timeline-time">
+                                                <span class="date">
+                                                    @{
+                                                        var culture = new System.Globalization.CultureInfo("tr-TR");
+                                                        var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);
+                                                    }
+                                                    @day
+
+                                                </span>
+                                                <span class="time">@makale.OlusuturulmaZamani.ToShortDateString()</span>
                                             </div>
-                                            <div class="timeline-footer d-flex justify-content-between mt-2">
-                                                @if (@kadi == @Model.KullaniciAdi)
-                                                {
-                                                    <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>                                                   
-                                                    <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
-                                                }
+                                            <!-- end timeline-time -->
+                                            <!-- begin timeline-icon -->
+                                    <div class="timeline-icon">
+                                                <a href="javascript:;">&nbsp;</a>
                                             </div>
-                                        </div>
-                                    </li>
+                                            <!-- end timeline-icon -->
+                                            <!-- begin timeline-body -->
+                                    <div class="timeline-body">
+                                                <div class="timeline-header">
+                                                    <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
+                                                    <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik      (@{
+                                                                @(makale.OnayliMi ? "Onaylandı" : "İnceleniyor")
+                                                            })</a> <small></small></span>
+                                                    <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
+                                                </div>
+                                                <div class="timeline-content">
+                                                    <a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> <h4>@makale.Baslik</h4></a>
+                                                    <p class=text-secondary>
+                                                        @if (makale.Icerik.Length > 300)
+                                                        {
+                                                            @makale.Icerik.Substring(0, 300)
+                                                            ;
+                                                            <span>...</span>
+                                                            <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Devamını oku</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            @makale.Icerik
+                                                            ;
+
+                                                        }
+                                                    </p>
+                                                    <div class="timeline-likes">
+                                                        <div class="stats-right">
+                                                            <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-footer d-flex justify-content-between mt-2">
+                                                    @if (@kadi == @Model.KullaniciAdi)
+                                                    {
+                                                        <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>
+                                                        <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
                                 }
                             </ul>
                             <!-- end timeline -->
