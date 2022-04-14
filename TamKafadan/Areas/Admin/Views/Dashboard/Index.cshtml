@@ -1,0 +1,28 @@
+﻿@*<h1>Yönetim paneli</h1>*@
+@using Microsoft.AspNetCore.Http
+@using TamKafadan.Models
+@model Admin
+@{
+    var admin = Context.Session.GetString("admin");  
+}
+
+
+@if(admin==null)
+{
+<div class="alert alert-success m-2">
+    <i class="fa fa-hands mr-1"></i>
+    Yönetim Paneline hoş geldiniz
+    <form method=post>
+        <input asp-for=name class="form-control" type=text placeholder="admin name"/>
+        <input asp-for=sifre class="form-control" type="password" placeholder="admin pwd"/>
+        <button>Login</button>
+        
+    </form>
+    </div>
+
+}
+else
+{
+    <p>Admin Yönetim Paneli</p>
+}
+

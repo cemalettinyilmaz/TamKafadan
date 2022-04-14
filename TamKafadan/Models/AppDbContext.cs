@@ -12,7 +12,7 @@ namespace TamKafadan.Models
         public DbSet<Yazar> Yazarlar { get; set; }
         public DbSet<Makale> Makaleler { get; set; }
         public DbSet<Konu> Konular { get; set; }
-
+        public DbSet<Admin> Admins { get; set; }
         internal Yazar FirstOrDefault()
         {
             throw new NotImplementedException();
