@@ -1,0 +1,66 @@
+﻿@using TamKafadan.ViewModels
+@model MakaleYazViewModel
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/jquery.multiselect.css">
+<link rel="stylesheet" href="~/fonts/icomoon/style.css">
+<style>
+    .bboduy {
+        background-color: rgba(181,180,178,255);
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Makale Düzenle";
+}
+@if (TempData["mesaj"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["mesaj"]
+    </div>
+}
+<div class="bboduy p-4 h-100 text-center rounded">
+    <div class="text-center">
+        <p class="text-white">Kafandakileri Getir.</p>
+        <p>  </p>
+        <p class="text-white">Kafana Göre Olanları Götür</p>
+        <p class="text-white">Burada kafadakileri bizimle paylaşmanı istiyoruz durma dökülmeye başla.</p>
+
+    </div>
+
+    <form asp-action="MakaleDuzenle" asp-controller="Makale">
+        <input asp-for=MakaleId hidden />
+        <div class="form-group">
+            <label asp-for="Baslik"></label>
+            <span class=text-white asp-validation-for=Baslik></span>
+            <input asp-for="Baslik" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Icerik"></label>
+            <span class=text-white asp-validation-for=Icerik></span>
+            <textarea class="form-control" asp-for="Icerik" rows="6"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Makale Konularını Seçiniz</label>
+            <span class=text-white asp-validation-for="SecilenKonular"></span>
+            <select asp-for=SecilenKonular asp-items=@Model.Konular multiple="multiple" class="3col active form-control">
+            </select>
+
+        </div>
+        <button class="btn btn-secondary mt-2">Makaleyi Düzenle</button>
+
+    </form>
+    <img class="img-fluid" src="~/images/pen.jpg" />
+</div>
+@section Scripts
+{
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/jquery.multiselect.js"></script>
+<script src="~/js/main.js"></script>
+
+}

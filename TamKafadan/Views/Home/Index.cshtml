@@ -8,8 +8,28 @@
 </div>
 	}
 
+@{
+    var kadi = Context.Session.GetString("kullaniciAdi");  
+}
+	<style>
+		p{
+			color:black;
+		}
+	</style>
 
 
-<div class="text-center">
-   Tam Kafadan Blog
-</div>
+	@if(kadi==null)
+	{
+		<div class="text-center">
+   
+		   <h5>
+			Kafandakileri Getir Tam Kafana Göre Olanları Götür
+		   </h5>
+		   <p>Makale Yaz seçeneğine tıklayarak hemen kafandakileri en kafa kullanıcılar ile paylaşabilirsin. </p>
+		   <p>Bunu yapmadan önce tek istediğimiz şey email adresin ile giriş yapman haydi başlayalım.</p>
+		   <p><a asp-area="" asp-controller="Home" asp-action="Privacy">Daha Fazla Bilgi İçin Tıkla</a></p>
+		</div>
+
+	}
+
+

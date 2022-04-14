@@ -1,0 +1,107 @@
+﻿<link rel="icon" href="~/assets/img/favicon.ico">
+<link href="~/assets/css/mediumish.css" rel="stylesheet">
+
+@model Makale
+
+<div class="p-0">
+
+
+	<div class="row">	
+		<!-- Begin Post -->
+		<div class="col-md-12 col-md-offset-2 col-xs-12">
+			<div class="">
+
+				<!-- Begin Top Meta -->
+				<div class="row post-top-meta">
+					<div class="col-md-2">
+						<a href="/@Model.Yazar.KullaniciAdi"><img class="author-thumb" src="~/images/@Model.Yazar.ResimYolu" alt=""></a>
+					</div>
+					<div class="col-md-10">
+						<a class="link-dark" href="/@Model.Yazar.KullaniciAdi">@Model.Yazar.YazarAd</a><a href="/@Model.Yazar.KullaniciAdi" class="btn follow">Profile Git</a><br />
+						<span class="author-description">@Model.Yazar.Biografi</span><br />
+						<span class="post-date">Yayınlanma Tarihi: @Model.OlusuturulmaZamani.ToShortDateString()</span><br />
+
+						<span class="post-read">Okuma Süresi : @OkumaSuresi(@Model.Icerik.Length) dakika</span>
+					</div>
+				</div>
+				<!-- End Top Menta -->
+
+				<h1 class="posttitle">@Model.Baslik</h1>
+
+			</div>
+
+			
+			<!-- Begin Post Content -->
+			<div class="article-post">
+				<p style="color:black">
+				@Model.Icerik
+				</p>
+		
+			</div>
+			<!-- End Post Content -->
+
+			<!-- Begin Tags -->
+			<div class="after-post-tags">
+				<ul class="tags">
+					@foreach (var konu in @Model.Konulari)
+				   {
+					<li><a href="#">@konu.KonuAdi</a></li>				   
+				   }
+				
+				</ul>
+			</div>
+			<!-- End Tags -->
+
+		</div>
+		<!-- End Post -->
+
+	</div>
+	</div>
+
+
+	@{
+    int OkumaSuresi(int metinUzunlugu)
+    {
+        if(metinUzunlugu<=500*5)
+        {
+            return 2;
+        }
+        else if(metinUzunlugu<=750*5)
+        {
+            return 6;
+        }
+        else if(metinUzunlugu<=1000*5)
+        {
+            return 8;
+        }
+        else if(metinUzunlugu<=1200*5)
+        {
+            return 9;
+        }
+        else if(metinUzunlugu<=1500*5)
+        {
+            return 12;
+        }
+        else if(metinUzunlugu<=1800*5)
+        {
+            return 14;
+        }
+        else if(metinUzunlugu<=2000*5)
+        {
+            return 15;
+        }
+        else
+        {
+            return 24;
+        }
+    }
+}
+
+@section Scripts
+{
+	<script src="~/assets/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="~/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="~/assets/js/mediumish.js"></script>
+}

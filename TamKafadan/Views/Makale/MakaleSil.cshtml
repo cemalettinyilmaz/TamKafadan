@@ -1,0 +1,17 @@
+﻿@model Makale
+
+
+<form method="post">
+    <input hidden asp-for="MakaleId"/>
+    <input hidden asp-for="YazarId"/>
+    <h4>@Model.Baslik</h4>
+    <h5>Adlı makaleyi silmek istediğinizden emin misiniz ? </h5>
+    <div>
+        <a class="btn btn-primary" href="/@Model.Yazar.KullaniciAdi">İptal</a>
+        <button class="btn btn-warning">Sil</button>
+    </div>
+</form>
+
+
+
+

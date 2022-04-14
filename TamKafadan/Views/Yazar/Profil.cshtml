@@ -19,10 +19,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
+<div class="container ">
     <div class="row">
         <div class="col-md-12">
-            <div id="content" class="content content-full-width">
+            <div id="content" class="content content-full-width p-0">
                 <!-- begin profile -->
                 <div class="profile">
                     <div class="profile-header">
@@ -33,7 +33,10 @@
                         <div class="profile-header-content">
                             <!-- BEGIN profile-header-img -->
                             <div class="profile-header-img">
+
                                 <img src="~/images/@Model.ResimYolu" alt="">
+
+                                </a>
                             </div>
                             <!-- END profile-header-img -->
                             <!-- BEGIN profile-header-info -->
@@ -43,6 +46,10 @@
                                 @if (kadi == @Model.KullaniciAdi)
                                 {
                                     <a asp-action="Ayarlar" asp-controller="Yazar" class="btn btn-sm btn-info mb-2">Profil Ayarları</a>
+                                }
+                                else
+                                {
+                                    <p>@Model.Email</p>
                                 }
                             </div>
                             <!-- END profile-header-info -->
@@ -68,7 +75,7 @@
                         <div class="tab-pane fade active show" id="profile-post">
                             <!-- begin timeline -->
                             <ul class="timeline">
-                                @foreach (var makale in @Model.Makaleleri)
+                                @foreach (var makale in @Model.Makaleleri.OrderByDescending(x => x.OlusuturulmaZamani))
                                 {
                                     <li>
                                         <!-- begin timeline-time -->
@@ -76,7 +83,7 @@
                                             <span class="date">
                                                 @{
                                                     var culture = new System.Globalization.CultureInfo("tr-TR");
-                                                    var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);                                               
+                                                    var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);
                                                 }
                                                 @day
 
@@ -92,35 +99,42 @@
                                         <!-- begin timeline-body -->
                                     <div class="timeline-body">
                                             <div class="timeline-header">
-                                                <span class="userimage"><img src="~/images/@Model.ResimYolu" alt=""></span>
-                                                <span class="username"><a href="javascript:;">@Model.KullaniciAdi</a> <small></small></span>
+                                                <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
+                                                <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik</a> <small></small></span>
                                                 <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
                                             </div>
                                             <div class="timeline-content">
-                                          
+                                                <a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> <h4>@makale.Baslik</h4></a>
                                                 <p class=text-secondary>
                                                     @if (makale.Icerik.Length > 300)
                                                     {
-                                                        @makale.Icerik.Substring(0, 300);
-                                                        <a>..Devamını oku</a>
+                                                        @makale.Icerik.Substring(0, 300)
+                                                        ;
+                                                        <span>...</span>
+                                                        <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Devamını oku</a>
                                                     }
                                                     else
                                                     {
                                                         @makale.Icerik;
+                                                        
                                                     }
                                                 </p>
-                                            </div>
                                             <div class="timeline-likes">
                                                 <div class="stats-right">
                                                     <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
                                                 </div>
                                             </div>
-                                            <div class="timeline-footer">
+                                            </div>
+                                            <div class="timeline-footer d-flex justify-content-between mt-2">
+                                                @if (@kadi == @Model.KullaniciAdi)
+                                                {
+                                                    <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>                                                   
+                                                    <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
+                                                }
                                             </div>
                                         </div>
                                     </li>
                                 }
-
                             </ul>
                             <!-- end timeline -->
                         </div>
@@ -137,31 +151,31 @@
 @{
     int OkumaSuresi(int metinUzunlugu)
     {
-        if(metinUzunlugu<=500*5)
+        if (metinUzunlugu <= 500 * 5)
         {
             return 2;
         }
-        else if(metinUzunlugu<=750*5)
+        else if (metinUzunlugu <= 750 * 5)
         {
             return 6;
         }
-        else if(metinUzunlugu<=1000*5)
+        else if (metinUzunlugu <= 1000 * 5)
         {
             return 8;
         }
-        else if(metinUzunlugu<=1200*5)
+        else if (metinUzunlugu <= 1200 * 5)
         {
             return 9;
         }
-        else if(metinUzunlugu<=1500*5)
+        else if (metinUzunlugu <= 1500 * 5)
         {
             return 12;
         }
-        else if(metinUzunlugu<=1800*5)
+        else if (metinUzunlugu <= 1800 * 5)
         {
             return 14;
         }
-        else if(metinUzunlugu<=2000*5)
+        else if (metinUzunlugu <= 2000 * 5)
         {
             return 15;
         }
@@ -823,3 +837,9 @@
         color: #ff5b57 !important;
     }
 </style>
+
+@section Scripts
+{
+
+
+}

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TamKafadan.Attributes;
 
 namespace TamKafadan.ViewModels
 {
@@ -15,6 +17,7 @@ namespace TamKafadan.ViewModels
         public string Biografi { get; set; }
         [Required(ErrorMessage = "Kullanıcı adı zorunludur."), MaxLength(30), Display(Name = "Kullanıcı Adı")]
         public string KullaniciAdi { get; set; }
+        [GecerliResim(ResimMaxBoyutuMB = 2)]
         public IFormFile Resim { get; set; }
         public string ResimYolu { get; set; }
         public SelectList Konular { get; set; }
