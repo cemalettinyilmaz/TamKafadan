@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="~/css/jquery.multiselect.css">
 <link rel="stylesheet" href="~/fonts/icomoon/style.css">
 <style>
-    .bboduy{
+  /*  .bboduy{
         background-color:rgba(181,180,178,255);
 
-    }
+    }*/
 </style>
 
 @{
@@ -27,10 +27,10 @@
 }
 <div class="bboduy p-4 h-100 text-center rounded">
 <div class="text-center">
-    <p class="text-white">Kafandakileri Getir.</p>
+    <p class="text-secondary">Kafandakileri Getir.</p>
     <p>  </p>
-    <p class="text-white">Kafana Göre Olanları Götür</p>
-    <p class="text-white">Burada kafadakileri bizimle paylaşmanı istiyoruz durma dökülmeye başla.</p>
+    <p class="text-secondary">Kafana Göre Olanları Götür</p>
+    <p class="text-secondary">Burada kafadakileri bizimle paylaşmanı istiyoruz durma dökülmeye başla.</p>
 
 </div>
 
@@ -38,26 +38,26 @@
 
     <div class="form-group">
         <label asp-for="Baslik"></label>
-        <span class=text-white asp-validation-for=Baslik></span>
+        <span class=text-info asp-validation-for=Baslik></span>
         <input asp-for="Baslik" type="text" class="form-control">
     </div>
     <div class="form-group">
         <label asp-for="Icerik"></label>
-          <span class=text-white asp-validation-for=Icerik></span>
+          <span class=text-info asp-validation-for=Icerik></span>
         <textarea class="form-control" asp-for="Icerik" rows="6"></textarea>
     </div>
     <div class="form-group">
         <label>Makale Konularını Seçiniz</label>
-        <span class=text-white asp-validation-for="SecilenKonular"></span>
+        <span class=text-info asp-validation-for="SecilenKonular"></span>
         <select asp-for=SecilenKonular asp-items=@Model.Konular multiple="multiple" class="3col active form-control">
         </select>
 
     </div>
-    <p style="color:white">Makaleniz Onaylandıktan Sonra Yayınlanacaktır.Durumunu Profil Sayfanızdan Görebilirsiniz.</p>
+    <p style="color:black">Makaleniz Onaylandıktan Sonra Yayınlanacaktır.Durumunu Profil Sayfanızdan Görebilirsiniz.</p>
       <button class="btn btn-secondary mt-2">Makaleyi Gönder</button>
       
 </form>
-<img class="img-fluid" src="~/images/pen.jpg"/>
+<img class="img-fluid" src="~/images/kalem-kafa.png"/>
 </div>
 @section Scripts
 {
