@@ -106,10 +106,14 @@ namespace TamKafadan.Controllers
             {           //girisYapan   
                 Yazar gy = _db.Yazarlar.Include(x => x.Konulari).FirstOrDefault(x => x.KullaniciAdi == vm.KullaniciAdi);
                 gy.Konulari.Clear();
-                foreach (var konuId in vm.SecilenKonular)
+                if (vm.SecilenKonular != null)
                 {
-                    Konu ek = _db.Konular.Find(Convert.ToInt32(konuId));
-                    gy.Konulari.Add(ek);
+                    foreach (var konuId in vm.SecilenKonular)
+                    {
+                        Konu ek = _db.Konular.Find(Convert.ToInt32(konuId));
+                        gy.Konulari.Add(ek);
+                    }
+
                 }
                 if (gy.Email != vm.Email)
                 {

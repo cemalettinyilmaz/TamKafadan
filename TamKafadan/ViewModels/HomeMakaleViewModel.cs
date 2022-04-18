@@ -7,6 +7,6 @@ namespace TamKafadan.ViewModels
     {
         public List<Makale> EnCokOkunanBesMakale { get; set; }
         public List<Makale> KullaniciKonuMakaleleri { get; set; }
-        public List<Makale> ZiyaretciRastgeleMakaleleri { get; set; }
+        public List<Konu> AnaSayfaMakaleleri { get; set; }
     }
 }

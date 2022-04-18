@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
@@ -40,14 +40,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                         </li>
-                     
+                       <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
+                        </li>
                      
                     </ul>
                        
                     <ul class="navbar-nav ml-auto">
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
-                        </li>
+                        
                         @if (string.IsNullOrEmpty(kadi))
                         {
                               <li class="nav-item">
@@ -59,6 +59,9 @@
                         }
                         else
                         {
+                              <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Takip">Takiplerin</a>
+                            </li>
                               <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Makale" asp-action="MakaleYaz">Makale Yaz</a>
                             </li>
@@ -88,7 +91,7 @@
         <div class="container text-center">
     Tam Kafadan'a hoşgeldiniz. Giriş yapmak için lütfen e-posta adresinizi girerek Gönder tuşuna basınız. E-postanıza gelen link ile giriş yapabilirsiniz. 
     <form method="post" class="mt-2" asp-controller="Giris" asp-action="GirisEmail">
-        <input name="email" type="email"/>
+        <input name="email" type="email" required/>
         <button class="btn btn-secondary">Gönder</button>
     </form>    
 </div>

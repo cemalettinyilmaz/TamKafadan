@@ -40,66 +40,8 @@
             <img class=img-fluid src="~/images/kalem-kafa.png">
         </div>
     </div>
-    <hr />
+  
 
-
-    <h4 class=text-center>Bu Ayın En Çok Kafalanan 6 Makalesi</h4>
-
-    <hr />
-    <div class="row">
-        @foreach (var item in Model.EnCokOkunanBesMakale)
-        {
-
-            <div class="card col-xl-2" style="width: 12rem;">
-                <div class="card-body">
-                   <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId"> <h5 class="card-title">@item.Baslik</h5></a>
-                    <p class="card-subtitle mb-2 text-muted">@item.Yazar.YazarAd</p>
-                    <p class="card-text">
-                        @if (item.Icerik.Length > 140)
-                        {
-                            @item.Icerik.Substring(0, 140)
-                        }
-                        else
-                        {
-                            @item.Icerik
-                        }
-                    </p>
-                </div>
-            </div>
-        }
-
-
-    </div>
-      <hr />
-
-
-    <h4 class=text-center>Rastgele Kafana Göre</h4>
-
-    <hr />
-    <div class="row">
-        @foreach (var item in Model.ZiyaretciRastgeleMakaleleri)
-        {
-
-            <div class="card col-xl-2" style="width: 12rem;">
-                <div class="card-body">
-                 <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId">  <h5 class="card-title">@item.Baslik</h5></a> 
-                    <p class="card-subtitle mb-2 text-muted">@item.Yazar.YazarAd</p>
-                    <p class="card-text">
-                        @if (item.Icerik.Length > 140)
-                        {
-                            @item.Icerik.Substring(0, 140)
-                        }
-                        else
-                        {
-                            @item.Icerik
-                        }
-                    </p>
-                </div>
-            </div>
-        }
-
-
-    </div>
 
 
 }
@@ -114,64 +56,76 @@ else
         <p>Hoşgeldin @kadi</p>
     </div>
 
-
-    <hr />
-
-    <h4 class=text-center>Bu Ayın En Çok Kafalanan 6 Makalesi</h4>
-    <div class="row">
-        @foreach (var item in Model.EnCokOkunanBesMakale)
-        {
-
-            <div class="card col-xl-2" style="width: 12rem;">
-                <div class="card-body">
-                   <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId"> <h5 class="card-title">@item.Baslik</h5></a>
-                    <p class="card-subtitle mb-2 text-muted">@item.Yazar.YazarAd</p>
-                    <p class="card-text">
-                        @if (item.Icerik.Length > 140)
-                        {
-                            @item.Icerik.Substring(0, 140)
-                        }
-                        else
-                        {
-                            @item.Icerik
-                        }
-                    </p>
-                </div>
-            </div>
-        }
-
-
-    </div>
-    <hr />
-    <h4>Senin Kafana Göre Seçtiğimiz Makaleler</h4>
-    <hr />
-    <div class="row">
-        @foreach (var item in Model.KullaniciKonuMakaleleri)
-        {
-
-            <div class="card col-xl-2" style="width: 12rem;">
-                <div class="card-body">
-                   <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId"> <h5 class="card-title">@item.Baslik</h5></a>
-                    <p class="card-subtitle mb-2 text-muted">@item.Yazar.YazarAd</p>
-                    <p class="card-text">
-                        @if (item.Icerik.Length > 140)
-                        {
-                            @item.Icerik.Substring(0, 140)
-                        }
-                        else
-                        {
-                            @item.Icerik
-                        }
-                    </p>
-                </div>
-            </div>
-        }
-
-
-    </div>
-
-
-
 }
+<hr />
+<h4 class=text-center>Bu Ayın En Çok Kafalanan 6 Makalesi</h4>
+<hr />
+<div class="row">
+    @foreach (var item in Model.EnCokOkunanBesMakale)
+    {
+      
+           
+        <div class="card col-lg-2">
+            <div class="card-body">
+                <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId" class="text-secondary font-italic"> <h5 class="card-title">@item.Baslik</h5></a>
+           <a  href="/@item.Yazar.KullaniciAdi"> <p class="card-subtitle mb-2 text-muted text-center"><img width="50px" src="~/images/@item.Yazar.ResimYolu" class="img-fluid" >@item.Yazar.YazarAd</p></a>
+                <p class="card-text">
+                    @if (item.Icerik.Length > 120)
+                    {
+                        @item.Icerik.Substring(0, 120)<a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId=@item.MakaleId>..Devamı</a>
+                    }
+                    else
+                    {
+                        @item.Icerik
+                    }
+                </p>
+            </div>
+                <div class="card-subtitle text-center font-italic">@item.OlusuturulmaZamani.ToShortDateString()  <br/> <i class="fa-solid fa-eye"></i> @item.GoruntulenmeSayisi</div>
+        </div>
+       
+    }
+
+
+</div>
+<hr />
+<h4 class=text-center>Her Konudan Her Kafadan</h4>
+<hr />
+@foreach (var konu in Model.AnaSayfaMakaleleri)
+{
+    if (konu.Makaleler.Count > 0)
+    {
+
+        <hr />
+        <h2>@konu.KonuAdi</h2>
+            <div class="row">
+        @foreach (var item in konu.Makaleler.Take(6))
+        {
+                <div class="card col-xl-2">
+                       <div class="card-body">
+                <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@item.MakaleId" class="text-secondary font-italic"> <h5 class="card-title">@item.Baslik</h5></a>
+               <a  href="/@item.Yazar.KullaniciAdi"> <p class="card-subtitle mb-2 text-muted text-center"><img  width="50px"  src="~/images/@item.Yazar.ResimYolu" class="img-fluid" >@item.Yazar.YazarAd</p></a>
+                <p class="card-text">
+                    @if (item.Icerik.Length > 120)
+                    {
+                        @item.Icerik.Substring(0, 120)<a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId=@item.MakaleId>..Devamı</a>
+                    }
+                    else
+                    {
+                        @item.Icerik
+                    }
+                </p>
+            </div>
+                  <div class="card-subtitle text-center font-italic">@item.OlusuturulmaZamani.ToShortDateString()  <br/> <i class="fa-solid fa-eye"></i> @item.GoruntulenmeSayisi</div>
+                </div>
+        }
+            </div>
+    }
+}
+
+
+
+
+
+
 
 

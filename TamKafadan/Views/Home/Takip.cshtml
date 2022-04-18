@@ -1,10 +1,11 @@
-﻿@model Yazar
+﻿@using TamKafadan.ViewModels
+@model HomeMakaleViewModel
 
 
 
 @{
     var kadi = Context.Session.GetString("kullaniciAdi");
-    ViewData["Title"] = @Model.KullaniciAdi + "Tam Kafadan";
+    ViewData["Title"] =  "Tam Kafadan Takip Listen";
 }
 @if (TempData["mesaj"] != null)
 {
@@ -23,51 +24,7 @@
 <div class="container ">
     <div class="row">
         <div class="col-md-12">
-            <div id="content" class="content content-full-width p-0">
-                <!-- begin profile -->
-                <div class="profile">
-                    <div class="profile-header">
-                        <!-- BEGIN profile-header-cover -->
-                        <div class="profile-header-cover"></div>
-                        <!-- END profile-header-cover -->
-                        <!-- BEGIN profile-header-content -->
-                        <div class="profile-header-content">
-                            <!-- BEGIN profile-header-img -->
-                            <div class="profile-header-img">
-
-                                <img src="~/images/@Model.ResimYolu" alt="">
-
-                                </a>
-                            </div>
-                            <!-- END profile-header-img -->
-                            <!-- BEGIN profile-header-info -->
-                            <div class="profile-header-info">
-                                <h4 class="m-t-10 m-b-5">@Model.YazarAd</h4>
-                                <p class="m-b-10" style="color:white">@Model.Biografi</p>
-                                @if (kadi == @Model.KullaniciAdi)
-                                {
-                                    <a asp-action="Ayarlar" asp-controller="Yazar" class="btn btn-sm btn-info mb-2">Profil Ayarları</a>
-                                }
-                                else
-                                {
-                                    <p>@Model.Email</p>
-                                }
-                            </div>
-                            <!-- END profile-header-info -->
-                        </div>
-                        <!-- END profile-header-content -->
-                        <!-- BEGIN profile-header-tab -->
-                        <ul class="profile-header-tab nav nav-tabs">
-                            <li class="nav-item"><a href="#profile-post" class="nav-link active show" data-toggle="tab">Kafa Konuları</a></li>
-                            @foreach (var konu in @Model.Konulari)
-                            {
-                                <li class="nav-item"><a href="#profile-post" class="nav-link active show" data-toggle="tab">@konu.KonuAdi</a></li>
-                            }
-                        </ul>
-                        <!-- END profile-header-tab -->
-                    </div>
-                </div>
-                <!-- end profile -->
+            <div id="content" class="content content-full-width p-0">        
                 <!-- begin profile-content -->
                 <div class="profile-content">
                     <!-- begin tab-content -->
@@ -75,10 +32,22 @@
                         <!-- begin #profile-post tab -->
                         <div class="tab-pane fade active show" id="profile-post">
                             <!-- begin timeline -->
+                           
+                            @if(ViewBag.KonuSayisi<=0)
+                            {
+                                <p>Henüz hiç bir konuyu takip etmiyorsun lütfen profil ayarlarından bir kaç konu kafala.</p>
+                            }
+                            else if(Model.KullaniciKonuMakaleleri.Count==0)
+                            {
+                                <p>Henüz favori konularınla alakalı bir makale yok, birilerinin birşeyler kafalamasını bekle.</p>
+                            }
+                            else
+                            {
+                                <h2 class="text-center font-italic">Kafa Konularına Göre Kafa Makaleler</h2>
                             <ul class="timeline">
-                                @foreach (var makale in @Model.Makaleleri.OrderByDescending(x => x.OlusuturulmaZamani))
+                                @foreach (var makale in @Model.KullaniciKonuMakaleleri.OrderByDescending(x => x.OlusuturulmaZamani))
                                 {
-                                    if (kadi != Model.KullaniciAdi && makale.OnayliMi == true)
+                                    if (makale.OnayliMi == true)
                                     {
                                         <li>
                                             <!-- begin timeline-time -->
@@ -102,7 +71,7 @@
                                             <!-- begin timeline-body -->
                                     <div class="timeline-body">
                                                 <div class="timeline-header">
-                                                    <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
+                                                    <span class="userimage"><a href="/@makale.Yazar.KullaniciAdi"><img src="~/images/@makale.Yazar.ResimYolu" alt=""></a></span>
                                                     <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik</a> <small></small></span>
                                                     <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
                                                 </div>
@@ -118,8 +87,7 @@
                                                         }
                                                         else
                                                         {
-                                                            @makale.Icerik
-                                                            ;
+                                                            @makale.Icerik                                                            
 
                                                         }
                                                     </p>
@@ -128,82 +96,13 @@
                                                             <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="timeline-footer d-flex justify-content-between mt-2">
-                                                    @if (@kadi == @Model.KullaniciAdi)
-                                                    {
-                                                        <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>
-                                                        <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
-                                                    }
-                                                </div>
+                                                </div>                                             
                                             </div>
                                         </li>
-                                    }
-                                    else if(kadi!=null)
-                                    {
-                                        <li>
-                                            <!-- begin timeline-time -->
-                                    <div class="timeline-time">
-                                                <span class="date">
-                                                    @{
-                                                        var culture = new System.Globalization.CultureInfo("tr-TR");
-                                                        var day = culture.DateTimeFormat.GetDayName(makale.OlusuturulmaZamani.DayOfWeek);
-                                                    }
-                                                    @day
-
-                                                </span>
-                                                <span class="time">@makale.OlusuturulmaZamani.ToShortDateString()</span>
-                                            </div>
-                                            <!-- end timeline-time -->
-                                            <!-- begin timeline-icon -->
-                                    <div class="timeline-icon">
-                                                <a href="javascript:;">&nbsp;</a>
-                                            </div>
-                                            <!-- end timeline-icon -->
-                                            <!-- begin timeline-body -->
-                                    <div class="timeline-body">
-                                                <div class="timeline-header">
-                                                    <span class="userimage"><a href="/@Model.KullaniciAdi"><img src="~/images/@Model.ResimYolu" alt=""></a></span>
-                                                    <span class="username"><a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> @makale.Baslik      (@{
-                                                                @(makale.OnayliMi ? "Onaylandı" : "İnceleniyor")
-                                                            })</a> <small></small></span>
-                                                    <span class="pull-right text-muted">@makale.GoruntulenmeSayisi Görüntüleme</span>
-                                                </div>
-                                                <div class="timeline-content">
-                                                    <a class=text-secondary asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId"> <h4>@makale.Baslik</h4></a>
-                                                    <p class=text-secondary>
-                                                        @if (makale.Icerik.Length > 300)
-                                                        {
-                                                            @makale.Icerik.Substring(0, 300)
-                                                            ;
-                                                            <span>...</span>
-                                                            <a asp-action="MakaleOku" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Devamını oku</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            @makale.Icerik
-                                                            ;
-
-                                                        }
-                                                    </p>
-                                                    <div class="timeline-likes">
-                                                        <div class="stats-right">
-                                                            <span class="stats-text">Okuma Süresi: @OkumaSuresi(makale.Icerik.Length) dakika</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="timeline-footer d-flex justify-content-between mt-2">
-                                                    @if (@kadi == @Model.KullaniciAdi)
-                                                    {
-                                                        <a asp-action="MakaleDuzenle" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Makaleyi Düzenle</a>
-                                                        <a class="btn btn-secondary text-white" asp-action="MakaleSil" asp-controller="Makale" asp-route-makaleId="@makale.MakaleId">Sil</a>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </li>
-                                    }
+                                    }                                   
                                 }
                             </ul>
+                            }
                             <!-- end timeline -->
                         </div>
                         <!-- end #profile-post tab -->
