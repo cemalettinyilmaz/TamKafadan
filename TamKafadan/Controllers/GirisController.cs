@@ -49,7 +49,7 @@ namespace TamKafadan.Controllers
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;      
-            smtp.Credentials = new NetworkCredential("tamkafadanblog@gmail.com", "!!Cemo1991");
+            smtp.Credentials = new NetworkCredential("tamkafadanblog@gmail.com", "Gizli");
             smtp.EnableSsl = true; 
             smtp.Timeout = 10000;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
